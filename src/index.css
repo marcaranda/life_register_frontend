@@ -23,3 +23,13 @@ code {
   margin-top: 70px;
   margin-bottom: 70px;
 }
+
+button {
+  background-color: #1780ea;
+  color: #ffffff;
+  border-radius: 5px;
+  border: none;
+  transition: background-color 0.3s ease;
+  font-size: 1em;
+  padding: 10px;
+}
