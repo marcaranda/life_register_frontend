@@ -18,16 +18,19 @@
 
 .meal-list .item input {
   width: 100%;
+  height: 40px;
   padding: 10px;
   box-sizing: border-box;
   border: none;
   border-radius: 5px;
+  font-size: 1.25rem;
 }
 
 .meal-list .item .select {
   width: 100%;
   border: none;
   border-radius: 5px;
+  font-size: 1.25rem;
   color: black;
 }
 

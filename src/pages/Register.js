@@ -1,16 +1,12 @@
 import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import RegisterMeal from '../components/RegisterMeal';
-import RegisterWorkout from '../components/RegisterWorkout';
+import RegisterMeal from '../components/Register/RegisterMeal';
+import RegisterWorkout from '../components/Register/RegisterWorkout';
 import '../styles/pages/Register.css';
 
 function Register() {
   const [showRegisterMeal, setShowRegisterMeal] = useState(true);
-
-  const handleCalendarChange = (date) => {
-    console.log(date);
-  }
 
   return (
     <div className='app-container'>

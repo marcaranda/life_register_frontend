@@ -6,9 +6,15 @@ import { es } from 'date-fns/locale';
 import Calendar from 'react-calendar';
 import "../styles/components/WeekCalendar.css";
 
-function WeekCalendar({calendarDate, handleCalendarChange}) {
+function WeekCalendar() {
   const [days, setDays] = useState([]);
+  const [calendarDate, setCalendarDate] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
+
+  useEffect(() => {
+    getWeekDays();
+    // eslint-disable-next-line
+  }, [calendarDate]);
 
   const getWeekDays = () =>{
     const start = startOfWeek(calendarDate, { locale: es });
@@ -25,13 +31,14 @@ function WeekCalendar({calendarDate, handleCalendarChange}) {
     setDays(daysList);
   }
 
-  useEffect(() => {
-    getWeekDays();
-    // eslint-disable-next-line
-  }, [calendarDate]);
-
   const handleShowCalendarClick = () => {
     setShowCalendar(prevShowCalendar => !prevShowCalendar);
+  }
+
+  const handleCalendarChange = (date) => {
+    setCalendarDate(date);
+    setShowCalendar(false);
+    //get day data
   }
 
   return (

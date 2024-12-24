@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faSignIn, faSignOut } from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +12,7 @@ function Navbar( { pageName }) {
         <FontAwesomeIcon color='#ffffff' icon={faSearch} />
       </button>
       <span>{pageName}</span>
-      <button onClick={() => navigate('/')}>
+      <button onClick={() => navigate('/enter')}>
         <FontAwesomeIcon color='#ffffff' icon={faSignIn} />
       </button>
     </nav>

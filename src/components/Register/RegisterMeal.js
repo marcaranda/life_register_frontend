@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Select from 'react-select';
-import '../styles/components/RegisterMeal.css';
+import '../../styles/components/Register/RegisterMeal.css';
 
 function RegisterMeal() {
   const [meal, setMeal] = useState([{ name : '', quantity : '', unit : 'g' }]);
@@ -31,13 +31,13 @@ function RegisterMeal() {
           <div key={index} className='item'>
             <input
               type='text'
-              placeholder='Food'
+              placeholder='Alimento'
               value={food.name}
               onChange={(e) => handleInputChange(index, 'name', e.target.value)}
             />
             <input
               type='number'
-              placeholder='Quantity'
+              placeholder='Cantidad'
               value={food.quantity}
               onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
             />
@@ -57,8 +57,8 @@ function RegisterMeal() {
       </div>
 
       <div className='buttons'>
-        <button onClick={handleAddFood}>Add Food</button>
-        <button onClick={handleSaveButtonClick}>Save</button>
+        <button onClick={handleAddFood}>Añadir Alimento</button>
+        <button onClick={handleSaveButtonClick}>Guardar</button>
       </div>
     </div>
   );
