@@ -1,8 +1,17 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCalendar } from '../Calendar/CalendarContext';
+import { isSameDay, isBefore, format } from 'date-fns';
+import { getUrl } from '../../data/Constants';
 import Select from 'react-select';
+import axios from 'axios';
 import '../../styles/components/Register/RegisterMeal.css';
 
 function RegisterMeal() {
+  const navigate = useNavigate();
+  const actualDate = new Date();
+  const url = getUrl();
+  const { calendarDate } = useCalendar();
   const [meal, setMeal] = useState([{ name : '', quantity : '', unit : 'g' }]);
 
   const handleAddFood = () => {
@@ -21,7 +30,23 @@ function RegisterMeal() {
   }
 
   const handleSaveButtonClick = () => {
-    console.log(meal);
+    if (isSameDay(calendarDate, actualDate) || isBefore(calendarDate, actualDate)) {
+      axios.put(`${url}registerMeal`, {
+        date: format(calendarDate, 'yyyy-MM-dd'),
+        meal: meal.map(item => ({
+          name: item.name,
+          quantity: parseFloat(item.quantity),
+          unit: item.unit.value
+        }))
+      }).then(() => {
+        navigate('/');
+      }).catch((error) => {
+        console.error('Error saving meal:', error);
+      });
+    } else {
+      alert('No puedes añadir comidas a un día futuro');
+      navigate('/');
+    }
   }
 
   return (

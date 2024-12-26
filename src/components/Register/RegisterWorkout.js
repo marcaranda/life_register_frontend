@@ -1,10 +1,19 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCalendar } from '../Calendar/CalendarContext';
+import { isSameDay, isBefore, format } from 'date-fns';
+import { getUrl } from '../../data/Constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import Select from 'react-select';
+import axios from 'axios';
 import '../../styles/components/Register/RegisterWorkout.css';
 
 function RegisterWorkout() {
+  const navigate = useNavigate();
+  const actualDate = new Date();
+  const url = getUrl();
+  const { calendarDate } = useCalendar();
   const [workout, setWorkout] = useState({
     name : '',
     type : 'Gym',
@@ -44,11 +53,30 @@ function RegisterWorkout() {
   }
 
   const handleSaveButtonClick = () => {
-    console.log(workout);
+    if (isSameDay(calendarDate, actualDate) || isBefore(calendarDate, actualDate)) {
+      axios.put(`${url}registerWorkout`, {
+        date: format(calendarDate, 'yyyy-MM-dd'),
+        workout: {
+          name: workout.name,
+          type: workout.type === 'Otro' ? workout.customType : workout.type,
+          url: workout.url,
+          duration: workout.duration,
+          intensity: workout.intensity,
+          calories: workout.calories + ' kcal',
+        }
+      }).then(() => {
+        navigate('/');
+      }).catch((error) => {
+        console.error('Error saving meal:', error);
+      });
+    } else {
+      alert('No puedes añadir comidas a un día futuro');
+      navigate('/');
+    }
   }
 
   return (
-    <form onSubmit={handleSaveButtonClick} className='workout-form'>
+    <div className='workout-form'>
       <div className='item'>
         <label>Nombre:</label>
         <input
@@ -120,8 +148,8 @@ function RegisterWorkout() {
         />
       </div>
 
-      <button type='submit'>Gaurdar</button>
-    </form>
+      <button onClick={handleSaveButtonClick}>Guardar</button>
+    </div>
   );
 }
 

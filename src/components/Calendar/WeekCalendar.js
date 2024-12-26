@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar, faList } from "@fortawesome/free-solid-svg-icons";
 import { endOfWeek, startOfWeek, format, add, isSameDay } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { useCalendar } from "./CalendarContext";
 import Calendar from 'react-calendar';
-import "../styles/components/WeekCalendar.css";
+import "../../styles/components/WeekCalendar.css";
 
 function WeekCalendar({ pageCallback, getDayData }) {
+  const { calendarDate, setCalendarDate } = useCalendar();
   const [days, setDays] = useState([]);
-  const [calendarDate, setCalendarDate] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
 
   useEffect(() => {

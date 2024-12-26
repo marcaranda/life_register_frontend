@@ -5,15 +5,19 @@ import Main from "./pages/Main"
 import LogInOut from './pages/LogInOut';
 import Register from "./pages/Register"
 
+import { CalendarProvider } from "./components/Calendar/CalendarContext";
+
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-      <Route path='/' element={<Main/>} />
-      <Route path='/enter' element={<LogInOut/>} />
-      <Route path='/register' element={<Register/>} />
-      </Routes>
-    </BrowserRouter>
+    <CalendarProvider>
+      <BrowserRouter>
+        <Routes>
+        <Route path='/' element={<Main/>} />
+        <Route path='/enter' element={<LogInOut/>} />
+        <Route path='/register' element={<Register/>} />
+        </Routes>
+      </BrowserRouter>
+    </CalendarProvider>
   );
 }
 

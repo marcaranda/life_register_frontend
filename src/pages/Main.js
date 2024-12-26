@@ -3,7 +3,7 @@ import { getUrl } from '../data/Constants';
 import { format } from 'date-fns';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import WeekCalendar from '../components/WeekCalendar';
+import WeekCalendar from '../components/Calendar/WeekCalendar';
 import ListMeal from '../components/List/ListMeal';
 import ListWorkout from '../components/List/ListWorkout';
 import axios from "axios";
@@ -31,41 +31,6 @@ function Main() {
     } catch (error) {
       console.error('Error fetching diet:', error);
     }
-  }
-
-  const data = {
-    workouts : [
-      {
-        name : 'pruebaWorkout',
-        type : 'Gym',
-        customType : '',
-        url : 'prueba.com',
-        duration : '01:00',
-        intensity : '4',
-        calories : '150kcal',
-      },
-      {
-        name : 'pruebaWorkout2',
-        type : 'Fútbol',
-        customType : '',
-        url : 'prueba2.com',
-        duration : '01:30',
-        intensity : '5',
-        calories : '200kcal',
-      }
-    ],
-    meals : [
-      {
-        name : 'pruebaMeal',
-        quantity : '100',
-        unit : 'g',
-      },
-      {
-        name : 'pruebaMeal2',
-        quantity : '200',
-        unit : 'g',
-      }
-    ]
   }
 
   return (
