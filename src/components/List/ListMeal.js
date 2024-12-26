@@ -26,9 +26,13 @@ function Meal ({ meal }) {
 function ListMeal({ meals }) {
   return (
     <div className='list'>
-      {meals.map((meal, index) => (
-        <Meal key={index} meal={meal} />
-      ))}
+      {meals.map((mealObj, index) =>
+        Object.keys(mealObj).map((mealKey) => (
+          mealObj[mealKey].map((mealDetail, detailIndex) => (
+            <Meal key={`${index}-${detailIndex}`} meal={mealDetail} />
+          ))
+        ))
+      )}
     </div>
   )
 }

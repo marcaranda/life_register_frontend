@@ -6,7 +6,7 @@ import { es } from 'date-fns/locale';
 import Calendar from 'react-calendar';
 import "../styles/components/WeekCalendar.css";
 
-function WeekCalendar() {
+function WeekCalendar({ pageCallback, getDayData }) {
   const [days, setDays] = useState([]);
   const [calendarDate, setCalendarDate] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
@@ -38,7 +38,10 @@ function WeekCalendar() {
   const handleCalendarChange = (date) => {
     setCalendarDate(date);
     setShowCalendar(false);
-    //get day data
+    
+    if (pageCallback === "main") {
+      getDayData(date);
+    }
   }
 
   return (

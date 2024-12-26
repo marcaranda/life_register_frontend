@@ -29,9 +29,11 @@ function Workout ({ workout }) {
 function ListWorkout({ workouts }) {
   return (
     <div className='list'>
-      {workouts.map((workout, index) => (
-        <Workout key={index} workout={workout} />
-      ))}
+      {workouts.map((workoutObj, index) =>
+        Object.keys(workoutObj).map((workoutKey) => (
+          <Workout key={`${index}-${workoutKey}`} workout={workoutObj[workoutKey]} />
+        ))
+      )}
     </div>
   )
 }
