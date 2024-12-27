@@ -4,6 +4,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom"
 import Main from "./pages/Main"
 import LogInOut from './pages/LogInOut';
 import Register from "./pages/Register"
+import SearchFriends from "./pages/Social/SearchFriends"
 
 import { CalendarProvider } from "./components/Calendar/CalendarContext";
 
@@ -15,6 +16,7 @@ function App() {
         <Route path='/' element={<Main/>} />
         <Route path='/enter' element={<LogInOut/>} />
         <Route path='/register' element={<Register/>} />
+        <Route path='/searchFriends' element={<SearchFriends/>} />
         </Routes>
       </BrowserRouter>
     </CalendarProvider>

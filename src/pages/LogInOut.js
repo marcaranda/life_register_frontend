@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getUrl } from '../data/Constants';
+import axios from 'axios';
 import "../styles/pages/LogInOut.css";
 
 function LogInOut() {
   const navigate = useNavigate();
+  const url = getUrl();
   const [showLogIn, setShowLogIn] = useState(true);
-  const [formData, setFormData] = useState({
+  const [dataForm, setDataForm] = useState({
     name: '',
     email: '',
     password: ''
@@ -14,33 +17,37 @@ function LogInOut() {
   const handleShowLogInClick = (bool) => {
     if (bool !== showLogIn) {
       setShowLogIn(bool);
-      setFormData({ name: '', email: '', password: '' });
+      setDataForm({ name: '', email: '', password: '' });
     }
   }
 
   const handleInputChange = (key, value) => {
-    setFormData({
-      ...formData,
+    setDataForm({
+      ...dataForm,
       [key]: value
     });
   }
 
-  const handleSubmit = (type) => {
+  const handleSubmit = async (type) => {
     if (type === 'login') {
-      const loginData = {
-        name: formData.name,
-        password: formData.password
-      }
+      const formData = new URLSearchParams();
+      formData.append('username', dataForm.email);
+      formData.append('password', dataForm.password);
 
       try {
-        // const response = await axios.post(`${url}login`, loginData);
-        // console.log(response.data);
+        await axios.post(`${url}login`, formData, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded', // Necesario para OAuth2PasswordRequestForm
+          },
+        })
+        .then((response) => {
+          const token = response.data.token;
+          localStorage.setItem('authToken', token);
+          navigate('/');
+        });
       } catch (error) {
         console.error('Error fetching diet:', error);
       }
-
-      console.log('Login:', loginData);
-      navigate('/')
     } else {
       try {
         // const response = await axios.post(`${url}register`, formData);
@@ -49,7 +56,7 @@ function LogInOut() {
         console.error('Error fetching diet:', error);
       }
 
-      console.log('Register:', formData);
+      console.log('Register:', dataForm);
       navigate('/')
     }
   }
@@ -65,20 +72,20 @@ function LogInOut() {
         {showLogIn ?
           <div className='form'>
             <div className='item'>
-              <label>Usuario</label>
+              <label>Correo</label>
               <input
-                type='text'
-                placeholder='Nombre'
-                value={formData.name}
-                onChange={(e) => handleInputChange('name', e.target.value)}
-              />
+                type='email'
+                placeholder='Email'
+                value={dataForm.email}
+                onChange={(e) => handleInputChange('email', e.target.value)}
+                />
             </div>
             <div className='item'>
               <label>Contraseña</label>
               <input
                 type='password'
                 placeholder='Contraseña'
-                value={formData.password}
+                value={dataForm.password}
                 onChange={(e) => handleInputChange('password', e.target.value)}
               />
             </div>
@@ -91,7 +98,7 @@ function LogInOut() {
                 <input
                   type='text'
                   placeholder='Nombre'
-                  value={formData.name}
+                  value={dataForm.name}
                   onChange={(e) => handleInputChange('name', e.target.value)}
                 />
               </div>
@@ -100,7 +107,7 @@ function LogInOut() {
                 <input
                   type='email'
                   placeholder='Email'
-                  value={formData.email}
+                  value={dataForm.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
                 />
               </div>
@@ -109,7 +116,7 @@ function LogInOut() {
                 <input
                   type='password'
                   placeholder='Contraseña'
-                  value={formData.password}
+                  value={dataForm.password}
                   onChange={(e) => handleInputChange('password', e.target.value)}
                 />
               </div>

@@ -11,6 +11,7 @@ import '../styles/pages/Main.css';
 
 function Main() {
   const url = getUrl();
+  const token = localStorage.getItem('authToken');
   const [showMealList, setShowMealList] = useState(true);
   const [dayData, setDayData] = useState(null);
 
@@ -23,9 +24,11 @@ function Main() {
   const getDayData = async (date) => {
     try {
       const dateFormatted = format(date, 'yyyy-MM-dd');
-      await axios.get(`${url}registedDay?date=${dateFormatted}`)
-        .then((response) => {
-          console.log(response.data);
+      await axios.get(`${url}registedDay?date=${dateFormatted}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`, // Añadir el token en las cabeceras
+        }
+      }).then((response) => {
           setDayData(response.data);
         });
     } catch (error) {

@@ -11,6 +11,7 @@ function RegisterMeal() {
   const navigate = useNavigate();
   const actualDate = new Date();
   const url = getUrl();
+  const token = localStorage.getItem('authToken');
   const { calendarDate } = useCalendar();
   const [meal, setMeal] = useState([{ name : '', quantity : '', unit : 'g' }]);
 
@@ -38,6 +39,11 @@ function RegisterMeal() {
           quantity: parseFloat(item.quantity),
           unit: item.unit.value
         }))
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`, // Aquí se añade el Bearer token en las cabeceras
+          'Content-Type': 'application/json', // O el tipo de contenido que esté esperando el servidor
+        }
       }).then(() => {
         navigate('/');
       }).catch((error) => {

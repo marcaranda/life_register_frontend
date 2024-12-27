@@ -13,6 +13,7 @@ function RegisterWorkout() {
   const navigate = useNavigate();
   const actualDate = new Date();
   const url = getUrl();
+  const token = localStorage.getItem('authToken');
   const { calendarDate } = useCalendar();
   const [workout, setWorkout] = useState({
     name : '',
@@ -63,6 +64,11 @@ function RegisterWorkout() {
           duration: workout.duration,
           intensity: workout.intensity,
           calories: workout.calories + ' kcal',
+        }
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`, // Aquí se añade el Bearer token en las cabeceras
+          'Content-Type': 'application/json', // O el tipo de contenido que esté esperando el servidor
         }
       }).then(() => {
         navigate('/');

@@ -8,7 +8,7 @@ function Navbar( { pageName }) {
 
   return (
     <nav className='navbar'>
-      <button onClick={() => navigate('/')}>
+      <button onClick={() => navigate('/searchFriends')}>
         <FontAwesomeIcon color='#ffffff' icon={faSearch} />
       </button>
       <span>{pageName}</span>

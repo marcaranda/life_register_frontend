@@ -8,6 +8,7 @@
 .list .item {
   width: 100%;
   padding: 1rem;
+  box-sizing: border-box;
   border-radius: 0.5rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #2f2f2f;
