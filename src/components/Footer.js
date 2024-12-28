@@ -11,7 +11,7 @@ function Footer() {
       <button onClick={() => navigate('/')}>
         <FontAwesomeIcon color='#ffffff' icon={faHome} />
       </button>
-      <button onClick={() => navigate('/')}>
+      <button onClick={() => navigate('/friends')}>
         <FontAwesomeIcon color='#ffffff' icon={faUserGroup} />
       </button>
       <button onClick={() => navigate('/register')}>

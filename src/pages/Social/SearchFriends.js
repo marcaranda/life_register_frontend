@@ -11,7 +11,7 @@ function SearchFriends() {
   const url = getUrl();
   const token = localStorage.getItem('authToken');
   const [search, setSearch] = useState('');
-  const [friends, setFriends] = useState([]);
+  const [users, setUsers] = useState([]);
 
   const handleSearch = async () => {
     try {
@@ -20,17 +20,24 @@ function SearchFriends() {
           'Authorization': `Bearer ${token}`,
         }
       }).then((response) => {
-        console.log('Friends:', response.data);
-        setFriends(response.data);
+        setUsers(response.data);
       }
     )} catch (error) {
       console.error('Error fetching friends:', error);
     };
   }
 
+  const handleAddFriend = async (email) => {
+    await axios.post(`${url}friends/request?email=${email}`)
+  }
+
+  const handleShowProfile = async (email) => {
+    
+  }
+
   return (
     <div className='app-container'>
-      <Navbar pageName='Inicio' />
+      <Navbar pageName='Buscar Amigos' />
       <main className='content'>
         <div className='header-search'>
           <h1>Buscar amigos</h1>
@@ -44,10 +51,13 @@ function SearchFriends() {
           </div>
         </div>
         <div className='friends-container'>
-          {friends.map((friend, index) => (
+          {users.map((friend, index) => (
             <div className='friend' key={index}>
-              <h3>{friend.user.name}</h3>
-              <button onClick={() => navigate(`/`)}>Ver perfil</button>
+              <h3>{friend.name}</h3>
+              <div className='buttons'>
+                <button onClick={() => handleShowProfile(friend.email)}>Ver Perfil</button>
+                <button onClick={() => handleAddFriend(friend.email)}>Seguir</button>
+              </div>
             </div>
           ))}
         </div>

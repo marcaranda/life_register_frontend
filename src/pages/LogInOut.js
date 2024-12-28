@@ -50,14 +50,15 @@ function LogInOut() {
       }
     } else {
       try {
-        // const response = await axios.post(`${url}register`, formData);
-        // console.log(response.data);
+        await axios.post(`${url}registerUser`, dataForm)
+        .then((response) => {
+          const token = response.data.token;
+          localStorage.setItem('authToken', token);
+          navigate('/');
+        });
       } catch (error) {
         console.error('Error fetching diet:', error);
       }
-
-      console.log('Register:', dataForm);
-      navigate('/')
     }
   }
 
