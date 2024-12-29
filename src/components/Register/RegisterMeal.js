@@ -32,7 +32,7 @@ function RegisterMeal() {
 
   const handleSaveButtonClick = () => {
     if (isSameDay(calendarDate, actualDate) || isBefore(calendarDate, actualDate)) {
-      axios.put(`${url}registerMeal`, {
+      axios.put(`${url}register/meal`, {
         date: format(calendarDate, 'yyyy-MM-dd'),
         meal: meal.map(item => ({
           name: item.name,

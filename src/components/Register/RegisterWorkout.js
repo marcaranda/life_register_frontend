@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, use } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useCalendar } from '../Calendar/CalendarContext';
 import { isSameDay, isBefore, format } from 'date-fns';
 import { getUrl } from '../../data/Constants';
@@ -11,6 +11,7 @@ import '../../styles/components/Register/RegisterWorkout.css';
 
 function RegisterWorkout() {
   const navigate = useNavigate();
+  const location = useLocation();
   const actualDate = new Date();
   const url = getUrl();
   const token = localStorage.getItem('authToken');
@@ -49,13 +50,56 @@ function RegisterWorkout() {
     }
   }
 
+  useEffect(() =>{
+    const getStravaData = async () => {
+      const params = new URLSearchParams(location.search);
+      const code = params.get('code');
+      if (code !== null) {
+        const workoutFromStorage = JSON.parse(localStorage.getItem('workout'));
+        
+        try {
+          console.log({
+            'url' : workoutFromStorage.url,
+            'code' : code,
+          })
+          await axios.put(`${url}register/strava`, {
+            'url' : workoutFromStorage.url,
+            'code' : code,
+          }, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            }
+          })
+          .then((response) => {
+            console.log(response.data);
+            setWorkout({
+              ...workoutFromStorage,
+              name: response.data.name,
+              duration: response.data.moving_time,
+              calories: response.data.calories,
+            });
+            localStorage.removeItem('workout');
+          });
+        } catch (error) {
+          console.error('Error fetching strava data:', error);
+        }
+      }
+    }
+
+    getStravaData();
+  }, []);
+
   const handleUploadUrlButtonClick = () => {
-    console.log('Upload url');
+    localStorage.setItem('workout', JSON.stringify(workout));
+
+    const stravaUrl = `https://www.strava.com/oauth/authorize?client_id=142165&redirect_uri=http://localhost:3000/register&response_type=code&scope=read`;
+    window.location.href = stravaUrl;
   }
 
   const handleSaveButtonClick = () => {
     if (isSameDay(calendarDate, actualDate) || isBefore(calendarDate, actualDate)) {
-      axios.put(`${url}registerWorkout`, {
+      axios.put(`${url}register/workout`, {
         date: format(calendarDate, 'yyyy-MM-dd'),
         workout: {
           name: workout.name,

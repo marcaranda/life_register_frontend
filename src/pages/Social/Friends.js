@@ -40,12 +40,12 @@ function Notifications() {
 
   const handleAcceptRequest = async (email) => {
     try {
-      await axios.put(`${url}friends/accept?email=${email}`, {
+      await axios.put(`${url}friends/accept?email=${email}`, {}, {
         headers: {
           'Authorization': `Bearer ${token}`,
         }
       }).then((response) => {
-        console.log(response.data);
+        setNotifications(notifications.filter((friend) => friend.email !== email));
       }
     )} catch (error) {
       console.error('Error accepting friend:', error);
