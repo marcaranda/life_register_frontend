@@ -1,5 +1,5 @@
-import { useState, useEffect, use } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useCalendar } from '../Calendar/CalendarContext';
 import { isSameDay, isBefore, format } from 'date-fns';
 import { getUrl } from '../../data/Constants';
@@ -58,10 +58,6 @@ function RegisterWorkout() {
         const workoutFromStorage = JSON.parse(localStorage.getItem('workout'));
         
         try {
-          console.log({
-            'url' : workoutFromStorage.url,
-            'code' : code,
-          })
           await axios.put(`${url}register/strava`, {
             'url' : workoutFromStorage.url,
             'code' : code,
@@ -72,7 +68,6 @@ function RegisterWorkout() {
             }
           })
           .then((response) => {
-            console.log(response.data);
             setWorkout({
               ...workoutFromStorage,
               name: response.data.name,
@@ -93,7 +88,7 @@ function RegisterWorkout() {
   const handleUploadUrlButtonClick = () => {
     localStorage.setItem('workout', JSON.stringify(workout));
 
-    const stravaUrl = `https://www.strava.com/oauth/authorize?client_id=142165&redirect_uri=http://localhost:3000/register&response_type=code&scope=read`;
+    const stravaUrl = `https://www.strava.com/oauth/authorize?client_id=142165&response_type=code&redirect_uri=http://localhost:3000/register&scope=read,activity:read`;
     window.location.href = stravaUrl;
   }
 
@@ -198,7 +193,9 @@ function RegisterWorkout() {
         />
       </div>
 
-      <button onClick={handleSaveButtonClick}>Guardar</button>
+      <div className='buttons'>
+        <button onClick={handleSaveButtonClick}>Guardar</button>
+      </div>
     </div>
   );
 }
