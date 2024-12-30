@@ -1,11 +1,11 @@
-.list {
+.list-meal {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
 }
 
-.list .item {
+.list-meal .item {
   width: 100%;
   padding: 1rem;
   box-sizing: border-box;
@@ -14,10 +14,10 @@
   background-color: #2f2f2f;
 }
 
-.list .item .header {
+.list-meal .item .header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin: 0;
 }

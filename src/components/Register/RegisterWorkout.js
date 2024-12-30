@@ -22,7 +22,7 @@ function RegisterWorkout() {
     customType : '',
     url : '',
     duration : '',
-    intensity : '',
+    intensity : 3,
     calories : '',
   })
 
@@ -83,13 +83,16 @@ function RegisterWorkout() {
     }
 
     getStravaData();
+    // eslint-disable-next-line
   }, []);
 
   const handleUploadUrlButtonClick = () => {
-    localStorage.setItem('workout', JSON.stringify(workout));
+    if (workout.url && /^https:\/\/www\.strava\.com\/activities\/\d+$/.test(workout.url)) {
+      localStorage.setItem('workout', JSON.stringify(workout));
 
-    const stravaUrl = `https://www.strava.com/oauth/authorize?client_id=142165&response_type=code&redirect_uri=http://localhost:3000/register&scope=read,activity:read`;
-    window.location.href = stravaUrl;
+      const stravaUrl = `https://www.strava.com/oauth/authorize?client_id=142165&response_type=code&redirect_uri=http://localhost:3000/register&scope=read,activity:read`;
+      window.location.href = stravaUrl;
+    }
   }
 
   const handleSaveButtonClick = () => {
@@ -100,9 +103,9 @@ function RegisterWorkout() {
           name: workout.name,
           type: workout.type === 'Otro' ? workout.customType : workout.type,
           url: workout.url,
-          duration: workout.duration,
-          intensity: workout.intensity,
-          calories: workout.calories + ' kcal',
+          duration: /^([0-9]|[01][0-9]|2[0-3]):([0-5][0-9])$/.test(workout.duration) ? workout.duration : '00:00',
+          intensity: workout.intensity.toString(),
+          calories: (workout.calories ? workout.calories : 0) + ' kcal',
         }
       }, {
         headers: {
@@ -155,8 +158,9 @@ function RegisterWorkout() {
         <label>URL:</label>
         <div className='two-elements'>
           <input
-            type='text'
-            placeholder='Url externa'
+            className='url'
+            type='url'
+            placeholder='Url externa (strava)'
             value={workout.url}
             onChange={(e) => handleInputChange('url', e.target.value)}
           />
@@ -169,16 +173,18 @@ function RegisterWorkout() {
         <label>Duración:</label>
         <input
           type='text'
-          placeholder='Duración'
+          placeholder='Duración: hh:mm'
           value={workout.duration}
           onChange={(e) => handleInputChange('duration', e.target.value)}
         />
       </div>
       <div className='item'>
-        <label>Intensidad:</label>
+        <label>Intensidad: {workout.intensity}</label>
         <input
-          type='text'
-          placeholder='Intensidad'
+          type='range'
+          placeholder='Intensidad: 1-5'
+          max={5}
+          min={1}
           value={workout.intensity}
           onChange={(e) => handleInputChange('intensity', e.target.value)}
         />
@@ -186,7 +192,7 @@ function RegisterWorkout() {
       <div className='item'>
         <label>Calorías:</label>
         <input
-          type='text'
+          type='number'
           placeholder='Calorías'
           value={workout.calories}
           onChange={(e) => handleInputChange('calories', e.target.value)}
