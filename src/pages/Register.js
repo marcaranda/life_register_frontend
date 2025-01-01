@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import RegisterMeal from '../components/Register/RegisterMeal';
@@ -7,6 +7,13 @@ import '../styles/pages/Register.css';
 
 function Register() {
   const [showRegisterMeal, setShowRegisterMeal] = useState(true);
+
+  useEffect(() => {
+    const workout = localStorage.getItem('workout')
+    if (workout) {
+      setShowRegisterMeal(false);
+    }
+  }, []);
 
   return (
     <div className='app-container'>

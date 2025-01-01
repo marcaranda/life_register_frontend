@@ -5,15 +5,21 @@ import '../styles/components/Navbar.css';
 
 function Navbar( { pageName }) {
   const navigate = useNavigate();
+  const token = localStorage.getItem('authToken');
+
+  const handleLogInOutClick = () => {
+    if (token !== null) localStorage.removeItem('authToken')
+    navigate('/enter')
+  }
 
   return (
     <nav className='navbar'>
-      <button onClick={() => navigate('/')}>
+      <button onClick={() => navigate('/searchFriends')}>
         <FontAwesomeIcon color='#ffffff' icon={faSearch} />
       </button>
       <span>{pageName}</span>
-      <button onClick={() => navigate('/enter')}>
-        <FontAwesomeIcon color='#ffffff' icon={faSignIn} />
+      <button onClick={() => handleLogInOutClick()}>
+        <FontAwesomeIcon color='#ffffff' icon={token === null ? faSignIn : faSignOut} />
       </button>
     </nav>
   );

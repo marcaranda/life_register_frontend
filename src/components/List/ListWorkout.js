@@ -9,7 +9,7 @@ function Workout ({ workout }) {
   return (
     <div className='item'>
       <div className='header' onClick={() => setShowDetails(prev => !prev)}>
-        <p>{workout.name}</p>
+        <h3>{workout.name}</h3>
         <p>
           <FontAwesomeIcon icon={showDetails ? faArrowUp : faArrowDown} />
         </p>
@@ -28,7 +28,7 @@ function Workout ({ workout }) {
 
 function ListWorkout({ workouts }) {
   return (
-    <div className='list'>
+    <div className='list-workout'>
       {workouts.map((workoutObj, index) =>
         Object.keys(workoutObj).map((workoutKey) => (
           <Workout key={`${index}-${workoutKey}`} workout={workoutObj[workoutKey]} />

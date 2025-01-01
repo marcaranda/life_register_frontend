@@ -1,0 +1,72 @@
+.header-search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.header-search h1 {
+  color: #ffffff;
+  font-size: 2em;
+}
+
+.header-search .search-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  gap: 10px;
+}
+
+.header-search input {
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  background-color: transparent;
+  padding: 5px;
+  font-size: 1.2em;
+}
+
+.header-search button {
+  width: 25%;
+  height: 100%;
+  border-radius: 5px;
+  border: 1px solid #ffffff;
+  transition: background-color 0.3s ease;
+  font-size: 1.2em;
+}
+
+.friends-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  gap: 1rem;
+}
+
+.friends-container .friend {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #2f2f2f;
+  color: #ffffff;
+}
+
+.friends-container .friend .buttons {
+  display: flex;
+  flex-direction: row;
+  width: 40%;
+  gap: 1rem;
+}
