@@ -31,8 +31,14 @@ function SearchFriends() {
     await axios.post(`${url}friends/request?email=${email}`)
   }
 
-  const handleShowProfile = async (email) => {
-    
+  const handleShowProfile = (name, email) => {
+    const user = {
+      "name": name,
+      "email": email
+    }
+    localStorage.setItem('user', JSON.stringify(user));
+
+    navigate(`/profile/${name.replace(/ /g, "")}`)
   }
 
   return (
@@ -54,15 +60,15 @@ function SearchFriends() {
           {users.map((friend, index) => (
             <div className='friend' key={index}>
               <h3>{friend.name}</h3>
-              <div className='buttons'>
-                <button onClick={() => handleShowProfile(friend.email)}>Ver Perfil</button>
+              <div className='friend-buttons'>
+                <button onClick={() => handleShowProfile(friend.name, friend.email)}>Ver Perfil</button>
                 <button onClick={() => handleAddFriend(friend.email)}>Seguir</button>
               </div>
             </div>
           ))}
         </div>
       </main>
-      <Footer />
+      <Footer pageName="friend"/>
     </div>
   );
 }

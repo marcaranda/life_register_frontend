@@ -64,7 +64,7 @@
   color: #ffffff;
 }
 
-.friends-container .friend .buttons {
+.friends-container .friend .friend-buttons {
   display: flex;
   flex-direction: row;
   width: 40%;

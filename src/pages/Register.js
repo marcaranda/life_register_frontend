@@ -25,7 +25,7 @@ function Register() {
         </div>
         {showRegisterMeal ? <RegisterMeal /> : <RegisterWorkout />}
       </main>
-      <Footer />
+      <Footer pageName="register"/>
     </div>
   );
 }

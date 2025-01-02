@@ -39,18 +39,28 @@ function Main() {
   return (
     <div className='app-container'>
       <Navbar pageName='Inicio' />
-      <main className='content'>
-        <WeekCalendar 
-          pageCallback={"main"}
-          getDayData={getDayData}
-        />
-        <div className='header'>
-          <button className={showMealList ? 'active' : ''} onClick={() => setShowMealList(true)}>Comida</button>
-          <button className={!showMealList ? 'active' : ''} onClick={() => setShowMealList(false)}>Entreno</button>
-        </div>
-        {showMealList ? <ListMeal meals={dayData?.meals || []} /> : <ListWorkout workouts={dayData?.workouts || []} />}
-      </main>
-      <Footer />
+      {token ? (
+        <>
+        <main className='content'>
+          <WeekCalendar 
+            pageCallback={"main"}
+            getDayData={getDayData}
+          />
+          <div className='header'>
+            <button className={showMealList ? 'active' : ''} onClick={() => setShowMealList(true)}>Comida</button>
+            <button className={!showMealList ? 'active' : ''} onClick={() => setShowMealList(false)}>Entreno</button>
+          </div>
+          {showMealList ? <ListMeal meals={dayData?.meals || []} /> : <ListWorkout workouts={dayData?.workouts || []} />}
+        </main>
+        </>
+      ) : (
+        <>
+        <main className='content'>
+          <h1>Por favor, inicia sesión para ver esta página</h1>
+        </main>
+        </>
+      )}
+      <Footer pageName="home"/>
     </div>
   );
 }

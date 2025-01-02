@@ -78,7 +78,7 @@ function Friends() {
         </div>
         {showNotifications ? <Notifications /> : <FriendsList />}
       </main>
-      <Footer />
+      <Footer pageName="friend"/>
     </div>
   )
 }
